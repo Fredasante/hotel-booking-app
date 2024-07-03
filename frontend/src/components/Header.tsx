@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="bg-[#003B95] max-w-screen-xl mx-auto py-5 px-5 md:px-10 lg:px-14">
+    <header className="bg-[#003B95] py-4 px-5 md:px-10 lg:px-14">
       <div className="flex justify-between">
         <Link to="/" className="text-2xl font-bold text-white tracking-tight">
           Bookly.com

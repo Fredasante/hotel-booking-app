@@ -18,7 +18,7 @@ const Hero = () => {
         </p>
         <Link
           to="/login"
-          className="bg-[#006CE4] w-fit font-semibold text-white px-4 py-3 border-[#003B95] rounded-md transition duration-300 hover:bg-[#003B95]"
+          className="bg-[#006CE4] w-fit font-semibold text-white px-4 py-3 border-[#003B95] rounded-md transition duration-300 ease-in-out hover:bg-[#003B95]"
         >
           Find Yours
         </Link>
