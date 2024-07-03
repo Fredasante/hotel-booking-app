@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
+import authRoutes from "./routes/auth.route";
 
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
@@ -17,9 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/api/test", (req: Request, res: Response) => {
-  res.send("Jellow");
-});
+app.use("/api/auth", authRoutes);
 
 app.listen(7000, () => {
   console.log("Server running on localhost:7000");
