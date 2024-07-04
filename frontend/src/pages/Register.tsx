@@ -11,7 +11,12 @@ type RegisterFormData = {
 };
 
 const Register = () => {
-  const { register, watch, handleSubmit } = useForm<RegisterFormData>();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -44,6 +49,11 @@ const Register = () => {
                   placeholder="Enter first name"
                 />
               </div>
+              {errors.firstName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.firstName.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -59,6 +69,11 @@ const Register = () => {
                   placeholder="Enter last name"
                 />
               </div>
+              {errors.lastName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.lastName.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -73,6 +88,11 @@ const Register = () => {
                   placeholder="Enter email address"
                 />
               </div>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -93,6 +113,11 @@ const Register = () => {
                   placeholder="Enter password"
                 />
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -117,6 +142,11 @@ const Register = () => {
                   placeholder="Confirm password"
                 />
               </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
           </div>
 
