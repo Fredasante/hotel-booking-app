@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import RegisterAccountInfo from "../components/RegisterAccountInfo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterUser } from "../api/UserApi";
 
-type RegisterFormData = {
+export type RegisterFormData = {
   email: string;
   firstName: string;
   lastName: string;
@@ -18,8 +19,12 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const { registerUser } = useRegisterUser();
+  const navigate = useNavigate();
+
+  const onSubmit = handleSubmit(async (data) => {
+    await registerUser(data);
+    navigate("/");
   });
 
   return (
