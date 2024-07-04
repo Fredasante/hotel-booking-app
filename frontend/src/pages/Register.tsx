@@ -1,0 +1,146 @@
+import { useForm } from "react-hook-form";
+import RegisterAccountInfo from "../components/RegisterAccountInfo";
+import { Link } from "react-router-dom";
+
+type RegisterFormData = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+};
+
+const Register = () => {
+  const { register, watch, handleSubmit } = useForm<RegisterFormData>();
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  return (
+    <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[95vh] mx-auto p-5 md:p-10">
+      <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
+        <RegisterAccountInfo />
+
+        <form
+          onSubmit={onSubmit}
+          className="md:col-span-2 w-full py-6 px-6 sm:px-16"
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold">Create an account</h3>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                First Name
+              </label>
+              <div className="relative flex items-center">
+                <input
+                  {...register("firstName", {
+                    required: "First name is required",
+                  })}
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter first name"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                Last Name
+              </label>
+              <div className="relative flex items-center">
+                <input
+                  {...register("lastName", {
+                    required: "Last name is required",
+                  })}
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter last name"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">Email</label>
+              <div className="relative flex items-center">
+                <input
+                  {...register("email", {
+                    required: "Email Address is required",
+                  })}
+                  type="email"
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter email address"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                Password
+              </label>
+              <div className="relative flex items-center">
+                <input
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                  type="password"
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Enter password"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-gray-800 text-sm mb-2 block">
+                Confirm Password
+              </label>
+              <div className="relative flex items-center">
+                <input
+                  {...register("confirmPassword", {
+                    validate: (val) => {
+                      if (!val) {
+                        return "Password is required";
+                      } else if (watch("password") !== val) {
+                        return "Passwords do not match";
+                      } else {
+                        return true;
+                      }
+                    },
+                  })}
+                  type="password"
+                  className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                  placeholder="Confirm password"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="!mt-12">
+            <button
+              type="submit"
+              className="w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none"
+            >
+              Create an account
+            </button>
+          </div>
+          <p className="text-gray-800 text-sm mt-6 text-center">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-blue-600 font-semibold hover:underline ml-1"
+            >
+              Login here
+            </Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
