@@ -2,6 +2,12 @@ import { useMutation } from "react-query";
 import { RegisterFormData } from "../pages/Register";
 import { toast } from "sonner";
 import { LoginAccountData } from "../pages/Login";
+import { useDispatch } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -34,6 +40,8 @@ export const useRegisterUser = () => {
 };
 
 export const useLoginUser = () => {
+  const dispatch = useDispatch();
+
   const login = async (formData: LoginAccountData) => {
     const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
@@ -51,10 +59,15 @@ export const useLoginUser = () => {
   };
 
   const { mutateAsync: loginUser, isLoading } = useMutation(login, {
-    onSuccess: () => {
+    onMutate: () => {
+      dispatch(signInStart());
+    },
+    onSuccess: (data) => {
+      dispatch(signInSuccess(data));
       toast.success("User logged in successfully");
     },
-    onError: (error: any) => {
+    onError: (error: Error) => {
+      dispatch(signInFailure(error.message));
       toast.error(error.message || "Failed to login");
     },
   });

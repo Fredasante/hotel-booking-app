@@ -4,6 +4,8 @@ import App from "./App.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ToastProvider from "./components/ToastProvider.tsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </ToastProvider>
     </QueryClientProvider>
   </React.StrictMode>
