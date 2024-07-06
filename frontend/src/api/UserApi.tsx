@@ -21,17 +21,16 @@ export const useRegisterUser = () => {
     return response.json();
   };
 
-  const { mutateAsync: registerUser, error, isSuccess } = useMutation(register);
+  const { mutateAsync: registerUser, isLoading } = useMutation(register, {
+    onSuccess: () => {
+      toast.success("User registered successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to login");
+    },
+  });
 
-  if (isSuccess) {
-    toast.success("User registered successfully");
-  }
-
-  if (error) {
-    toast.error(error.toString());
-  }
-
-  return { registerUser };
+  return { registerUser, isLoading };
 };
 
 export const useLoginUser = () => {

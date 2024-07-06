@@ -19,7 +19,7 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormData>();
 
-  const { registerUser } = useRegisterUser();
+  const { registerUser, isLoading } = useRegisterUser();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (data) => {
@@ -155,14 +155,12 @@ const Register = () => {
             </div>
           </div>
 
-          <div className="!mt-12">
-            <button
-              type="submit"
-              className="w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none"
-            >
-              Create an account
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="!mt-12 w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none"
+          >
+            {isLoading ? "Loading..." : "Create an account"}
+          </button>
           <p className="text-gray-800 text-sm mt-6 text-center">
             Already have an account?{" "}
             <Link
