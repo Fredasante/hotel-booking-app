@@ -24,7 +24,7 @@ const Register = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     await registerUser(data);
-    navigate("/");
+    navigate("/login");
   });
 
   return (
