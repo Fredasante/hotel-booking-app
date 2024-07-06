@@ -8,6 +8,7 @@ import Layout from "./layouts/Layout";
 import Homepage from "./pages/Homepage";
 import Search from "./pages/Search";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 export default function App() {
   return (
@@ -34,6 +35,14 @@ export default function App() {
           element={
             <Layout>
               <Register />
+            </Layout>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Login />
             </Layout>
           }
         />
