@@ -5,7 +5,8 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ToastProvider from "./components/ToastProvider.tsx";
 import { Provider } from "react-redux";
-import { store } from "./redux/store.ts";
+import { persistor, store } from "./redux/store.ts";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,9 +21,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <PersistGate loading={null} persistor={persistor}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </PersistGate>
       </ToastProvider>
     </QueryClientProvider>
   </React.StrictMode>
