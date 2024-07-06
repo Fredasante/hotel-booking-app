@@ -7,6 +7,7 @@ import {
   signInFailure,
   signInStart,
   signInSuccess,
+  signOut,
 } from "../redux/user/userSlice";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -73,4 +74,28 @@ export const useLoginUser = () => {
   });
 
   return { loginUser, isLoading };
+};
+
+export const useLogOutUser = () => {
+  const dispatch = useDispatch();
+
+  const logout = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+      method: "POST",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to logout");
+    }
+    return response.json();
+  };
+
+  const { mutateAsync: logoutUser } = useMutation(logout, {
+    onSuccess: () => {
+      dispatch(signOut());
+      toast.success("Logged out successfully");
+    },
+  });
+
+  return { logoutUser };
 };
