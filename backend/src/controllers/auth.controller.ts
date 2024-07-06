@@ -82,7 +82,9 @@ export const login = async (req: Request, res: Response) => {
       maxAge: 86400000,
     });
 
-    res.status(200).json({ userId: user._id });
+    const { password: pass, ...rest } = user.toObject();
+
+    res.status(200).json(rest);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong!" });
