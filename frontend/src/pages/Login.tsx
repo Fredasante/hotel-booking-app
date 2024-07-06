@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginAccountInfo from "../components/LoginAccountInfo";
 import { useForm } from "react-hook-form";
+import { useLoginUser } from "../api/UserApi";
 
 export type LoginAccountData = {
   email: string;
@@ -10,14 +11,26 @@ export type LoginAccountData = {
 const Login = () => {
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<LoginAccountData>();
+
+  const { loginUser, isLoading } = useLoginUser();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: LoginAccountData) => {
+    await loginUser(data);
+    navigate("/");
+  };
   return (
     <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[95vh] mx-auto p-5 md:p-10">
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
         <LoginAccountInfo />
 
-        <form className="md:col-span-2 w-full py-6 px-6 sm:px-16">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="md:col-span-2 w-full py-6 px-6 sm:px-16"
+        >
           <div className="mb-6">
             <h3 className="text-2xl font-bold">Login</h3>
           </div>
@@ -68,14 +81,13 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="!mt-12">
-            <button
-              type="submit"
-              className="w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none"
-            >
-              Login
-            </button>
-          </div>
+          <button
+            disabled={isLoading}
+            type="submit"
+            className="!mt-12 w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none"
+          >
+            {isLoading ? "Loading..." : "Login"}
+          </button>
           <p className="text-gray-800 text-sm mt-6 text-center">
             Don&apos;t an account?{" "}
             <Link
