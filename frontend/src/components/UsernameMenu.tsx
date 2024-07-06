@@ -8,11 +8,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
+import { useLogOutUser } from "../api/UserApi";
 
 const UsernameMenu = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const { logoutUser } = useLogOutUser();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logoutUser();
+    navigate("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -31,7 +40,10 @@ const UsernameMenu = () => {
           <DropdownMenuItem>Manage Hotel</DropdownMenuItem>
         </Link>
         <DropdownMenuItem>
-          <button className="text-white mt-2 bg-[#0F172B] py-2 px-4 text-sm rounded-md font-semibold transition-all hover:bg-[#2c2f3a]">
+          <button
+            onClick={handleLogout}
+            className="text-white mt-2 bg-[#0F172B] py-2 px-4 text-sm rounded-md font-semibold transition-all hover:bg-[#2c2f3a]"
+          >
             Log Out
           </button>
         </DropdownMenuItem>

@@ -92,10 +92,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  if (!req.cookies["auth_token"]) {
-    return res.status(400).json({ message: "No auth token found" });
-  }
-
   res.clearCookie("auth_token");
 
   res.status(200).json({ message: "Logged out successfully" });
