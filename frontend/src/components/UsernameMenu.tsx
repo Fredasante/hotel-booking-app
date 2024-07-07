@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
 import { useLogOutUser } from "../api/UserApi";
 
 const UsernameMenu = () => {
@@ -24,10 +23,20 @@ const UsernameMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className="flex items-center bg-gray-50 font-semibold text-[#003B95] px-2.5 py-1.5 border-[#003B95] rounded-sm transition duration-500 ease-in-out hover:bg-gray-200">
-          <span className="mr-1">Welcome, {currentUser?.firstName}</span>
-          <FaAngleDown fill="#003B95" />
+      <DropdownMenuTrigger className="flex">
+        <img
+          src={currentUser?.profilePicture}
+          alt=""
+          className="w-9 h-9 rounded-full object-cover cursor-pointer border-2 border-[#FFB700]"
+        />
+
+        <div className="flex flex-col items-start">
+          <span className="text-white font-bold text-sm ml-2 cursor-pointer">
+            {currentUser?.displayName}
+          </span>
+          <span className="text-[#FFB700] font-semibold text-xs ml-2 cursor-pointer">
+            Genuis Level 1
+          </span>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="px-2">

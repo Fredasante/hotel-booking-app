@@ -102,6 +102,7 @@ export const google = async (req: Request, res: Response) => {
 
       user = new User({
         email,
+        displayName,
         firstName: displayName.split(" ")[0],
         lastName: displayName.split(" ")[1] || "",
         profilePicture: photoURL,
