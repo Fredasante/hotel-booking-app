@@ -76,6 +76,42 @@ export const useLoginUser = () => {
   return { loginUser, isLoading };
 };
 
+export const useGoogleLogin = () => {
+  const dispatch = useDispatch();
+
+  const login = async (data: any) => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to login");
+    }
+    return response.json();
+  };
+
+  const { mutateAsync: googleLogin, isLoading } = useMutation(login, {
+    onMutate: () => {
+      dispatch(signInStart());
+    },
+    onSuccess: (data) => {
+      dispatch(signInSuccess(data));
+      toast.success("User logged in successfully");
+    },
+    onError: (error: Error) => {
+      dispatch(signInFailure(error.message));
+      toast.error(error.message || "Failed to login");
+    },
+  });
+
+  return { googleLogin, isLoading };
+};
+
 export const useLogOutUser = () => {
   const dispatch = useDispatch();
 

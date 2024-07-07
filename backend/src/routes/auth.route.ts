@@ -1,5 +1,10 @@
 import express from "express";
-import { login, logout, registerUser } from "../controllers/auth.controller";
+import {
+  google,
+  login,
+  logout,
+  registerUser,
+} from "../controllers/auth.controller";
 import { check } from "express-validator";
 
 const router = express.Router();
@@ -27,6 +32,8 @@ router.post(
   ],
   login
 );
+
+router.post("/google", google);
 
 router.post("/logout", logout);
 

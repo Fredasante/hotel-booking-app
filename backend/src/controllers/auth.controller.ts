@@ -91,6 +91,51 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const google = async (req: Request, res: Response) => {
+  const { displayName, email, photoURL } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      const generatedPassword = Math.random().toString(36).slice(-8);
+
+      user = new User({
+        email,
+        firstName: displayName.split(" ")[0],
+        lastName: displayName.split(" ")[1] || "",
+        profilePicture: photoURL,
+        password: generatedPassword,
+      });
+
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+      },
+      process.env.JWT_SECRET_KEY as string,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 86400000,
+    });
+
+    const { password, ...rest } = user.toObject();
+
+    return res.status(200).json(rest);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong!" });
+  }
+};
+
 export const logout = async (req: Request, res: Response) => {
   res.clearCookie("auth_token");
 

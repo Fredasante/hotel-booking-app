@@ -7,6 +7,8 @@ export type UserType = {
   lastName: string;
   email: string;
   password: string;
+  displayName: string;
+  profilePicture: string;
 };
 
 const userSchema = new mongoose.Schema(
@@ -15,6 +17,12 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    displayName: { type: String },
+    profilePicture: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    },
   },
   { timestamps: true }
 );
