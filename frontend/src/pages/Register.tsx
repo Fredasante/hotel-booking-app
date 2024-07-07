@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import RegisterAccountInfo from "../components/RegisterAccountInfo";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUser } from "../api/UserApi";
+import OAuth from "../components/OAuth";
 
 export type RegisterFormData = {
   email: string;
@@ -30,7 +30,7 @@ const Register = () => {
   return (
     <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[95vh] mx-auto p-5 md:p-10">
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
-        <RegisterAccountInfo />
+        <OAuth />
 
         <form
           onSubmit={onSubmit}
