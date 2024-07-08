@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
 import cloudinary from "cloudinary";
+import Hotel, { HotelType } from "../models/hotel.model";
 
-export const createMyHotel = async (req: Request, res: Response) => {
+interface CustomRequest extends Request {
+  userId?: string;
+}
+
+export const createMyHotel = async (req: CustomRequest, res: Response) => {
   try {
     const imageFiles = req.files as Express.Multer.File[];
-    const newHotel = req.body;
+    const newHotel: HotelType = req.body;
 
     const uploadPromises = imageFiles.map(async (image) => {
       const b64 = Buffer.from(image.buffer).toString("base64");
@@ -14,6 +19,13 @@ export const createMyHotel = async (req: Request, res: Response) => {
     });
 
     const imageUrls = await Promise.all(uploadPromises);
+    newHotel.imageUrls = imageUrls;
+    newHotel.lastUpdated = new Date();
+    newHotel.userId = req.userId!;
+
+    const hotel = new Hotel(newHotel);
+    await hotel.save();
+    res.status(201).send(hotel);
   } catch (error) {
     console.log("Error creating hotel: ", error);
     res.status(500).json({ message: "Internal server error" });

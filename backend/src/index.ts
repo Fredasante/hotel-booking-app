@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.route";
+import hotelRoutes from "./routes/hotel.route";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
@@ -31,6 +32,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/hotel", hotelRoutes);
 
 app.listen(7000, () => {
   console.log("Server running on localhost:7000");
