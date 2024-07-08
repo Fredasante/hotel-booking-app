@@ -45,8 +45,8 @@ const UsernameMenu = () => {
         <Link to="/user-profile">
           <DropdownMenuItem>Profile </DropdownMenuItem>
         </Link>
-        <Link to="/manage-hotel">
-          <DropdownMenuItem>Manage Hotel</DropdownMenuItem>
+        <Link to="/create-hotel">
+          <DropdownMenuItem>Create Hotel</DropdownMenuItem>
         </Link>
         <DropdownMenuItem>
           <button
