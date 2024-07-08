@@ -4,7 +4,11 @@ import { app } from "../firebase";
 import { useGoogleLogin } from "../api/UserApi";
 import { useNavigate } from "react-router-dom";
 
-const OAuth = () => {
+type Props = {
+  title: string;
+};
+
+const OAuth = ({ title }: Props) => {
   const auth = getAuth(app);
   const { googleLogin } = useGoogleLogin();
   const navigate = useNavigate();
@@ -30,19 +34,7 @@ const OAuth = () => {
   return (
     <div className="max-md:order-1 flex flex-col justify-center space-y-16 max-md:mt-16 min-h-full bg-[#003B95] lg:px-8 px-4 py-4">
       <div>
-        <h4 className="text-white text-lg font-semibold">
-          Create Your Account
-        </h4>
-        <p className="text-[13px] text-white mt-3 leading-relaxed">
-          Welcome to our registration page! Get started by creating your account
-          or logging it using google.
-        </p>
-      </div>
-
-      <div>
-        <h4 className="text-white text-lg font-semibold mb-3">
-          Login with Google
-        </h4>
+        <h4 className="text-white font-semibold mb-3 text-center">{title}</h4>
 
         <button
           onClick={handleGoogleClick}

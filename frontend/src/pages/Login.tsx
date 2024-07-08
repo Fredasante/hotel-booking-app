@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import LoginAccountInfo from "../components/LoginAccountInfo";
 import { useForm } from "react-hook-form";
 import { useLoginUser } from "../api/UserApi";
+import OAuth from "../components/OAuth";
 
 export type LoginAccountData = {
   email: string;
@@ -23,16 +23,16 @@ const Login = () => {
     navigate("/");
   };
   return (
-    <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[95vh] mx-auto p-5 md:p-10">
+    <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[85vh] mx-auto p-5 md:p-10">
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
-        <LoginAccountInfo />
+        <OAuth title="Sign in with google" />
 
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="md:col-span-2 w-full py-6 px-6 sm:px-16"
         >
           <div className="mb-6">
-            <h3 className="text-2xl font-bold">Login</h3>
+            <h3 className="text-2xl font-bold">Sign In</h3>
           </div>
 
           <div className="space-y-6">

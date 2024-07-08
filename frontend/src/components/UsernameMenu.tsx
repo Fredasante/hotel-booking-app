@@ -32,7 +32,7 @@ const UsernameMenu = () => {
 
         <div className="flex flex-col items-start">
           <span className="text-white font-bold text-sm ml-2 cursor-pointer">
-            {currentUser?.displayName}
+            {currentUser?.displayName || currentUser?.firstName}
           </span>
           <span className="text-[#FFB700] font-semibold text-xs ml-2 cursor-pointer">
             Genuis Level 1

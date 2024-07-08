@@ -30,7 +30,7 @@ export const useRegisterUser = () => {
 
   const { mutateAsync: registerUser, isLoading } = useMutation(register, {
     onSuccess: () => {
-      toast.success("User registered successfully");
+      toast.success("Registration Success!");
     },
     onError: (error: any) => {
       toast.error(error.message || "Failed to login");
@@ -65,7 +65,6 @@ export const useLoginUser = () => {
     },
     onSuccess: (data) => {
       dispatch(signInSuccess(data));
-      toast.success("User logged in successfully");
     },
     onError: (error: Error) => {
       dispatch(signInFailure(error.message));
@@ -101,7 +100,6 @@ export const useGoogleLogin = () => {
     },
     onSuccess: (data) => {
       dispatch(signInSuccess(data));
-      toast.success("User logged in successfully");
     },
     onError: (error: Error) => {
       dispatch(signInFailure(error.message));
@@ -129,7 +127,6 @@ export const useLogOutUser = () => {
   const { mutateAsync: logoutUser } = useMutation(logout, {
     onSuccess: () => {
       dispatch(signOut());
-      toast.success("Logged out successfully");
     },
   });
 

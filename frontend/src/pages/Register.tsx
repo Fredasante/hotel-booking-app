@@ -28,9 +28,9 @@ const Register = () => {
   });
 
   return (
-    <div className=" max-w-4xl flex items-center justify-center min-h-[70vh] xl:min-h-[95vh] mx-auto p-5 md:p-10">
+    <div className=" max-w-4xl flex items-center justify-center xl:min-h-[90vh] mx-auto p-5 md:p-10">
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
-        <OAuth />
+        <OAuth title="Sign up with google" />
 
         <form
           onSubmit={onSubmit}

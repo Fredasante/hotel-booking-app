@@ -9,6 +9,9 @@ import Homepage from "./pages/Homepage";
 import Search from "./pages/Search";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import CreateHotel from "./pages/CreateHotel";
+import NavLayout from "./layouts/NavLayout";
 
 export default function App() {
   return (
@@ -33,19 +36,29 @@ export default function App() {
         <Route
           path="/register"
           element={
-            <Layout>
+            <NavLayout>
               <Register />
-            </Layout>
+            </NavLayout>
           }
         />
         <Route
           path="/login"
           element={
-            <Layout>
+            <NavLayout>
               <Login />
-            </Layout>
+            </NavLayout>
           }
         />
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/create-hotel"
+            element={
+              <Layout>
+                <CreateHotel />
+              </Layout>
+            }
+          />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
