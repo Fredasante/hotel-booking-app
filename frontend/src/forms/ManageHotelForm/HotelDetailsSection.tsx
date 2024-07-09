@@ -105,9 +105,10 @@ const HotelDetailsSection = () => {
               {...register("starRating", {
                 required: "Star rating is required",
               })}
+              defaultValue=""
               className="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all"
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Select star rating
               </option>
               {[1, 2, 3, 4, 5].map((rating) => (
@@ -122,15 +123,6 @@ const HotelDetailsSection = () => {
               </span>
             )}
           </div>
-        </div>
-
-        <div className="mt-8">
-          <button
-            type="submit"
-            className="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
-          >
-            Sign up
-          </button>
         </div>
       </div>
     </div>
