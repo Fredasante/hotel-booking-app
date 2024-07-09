@@ -5,8 +5,12 @@ import { HotelFormData } from "./ManageHotelForm";
 const HotelImagesSection = () => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext<HotelFormData>();
+
+  const imageFiles = watch("imageFiles") || [];
+
   return (
     <div className="my-6 pt-2">
       <h5 className="sm:text-xl text-lg font-bold">Images</h5>
@@ -43,6 +47,13 @@ const HotelImagesSection = () => {
           PNG, JPG SVG, WEBP, and GIF are Allowed.
         </p>
       </label>
+      <div className="max-w-md mx-auto text-center mt-2">
+        {imageFiles.length > 0 && (
+          <span className="text-sm font-medium text-gray-600">
+            {imageFiles.length} image{imageFiles.length > 1 ? "s" : ""} selected
+          </span>
+        )}
+      </div>
       <div className="max-w-md mx-auto text-center">
         {errors.imageFiles && (
           <span className="text-red-500 text-sm mt-1">
