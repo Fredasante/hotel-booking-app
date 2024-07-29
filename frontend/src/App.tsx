@@ -62,7 +62,7 @@ export default function App() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route
-            path="/hotels"
+            path="/my-hotels"
             element={
               <Layout>
                 <Hotels />

@@ -9,7 +9,7 @@ const CreateHotel = () => {
   const handleSave = async (hotelFormData: FormData) => {
     try {
       await createHotel(hotelFormData);
-      navigate("/hotels");
+      navigate("/my-hotels");
     } catch (error) {
       console.error(error);
     }
