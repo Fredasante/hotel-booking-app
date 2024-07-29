@@ -16,6 +16,7 @@ export const useRegisterUser = () => {
   const register = async (formData: RegisterFormData) => {
     const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -46,6 +47,7 @@ export const useLoginUser = () => {
   const login = async (formData: LoginAccountData) => {
     const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -81,6 +83,7 @@ export const useGoogleLogin = () => {
   const login = async (data: any) => {
     const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -116,6 +119,7 @@ export const useLogOutUser = () => {
   const logout = async () => {
     const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
       method: "POST",
+      credentials: "include",
     });
     if (!response.ok) {
       const errorData = await response.json();

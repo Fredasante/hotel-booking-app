@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateHotel from "./pages/CreateHotel";
 import NavLayout from "./layouts/NavLayout";
+import Hotels from "./pages/Hotels";
 
 export default function App() {
   return (
@@ -55,6 +56,16 @@ export default function App() {
             element={
               <Layout>
                 <CreateHotel />
+              </Layout>
+            }
+          />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/hotels"
+            element={
+              <Layout>
+                <Hotels />
               </Layout>
             }
           />

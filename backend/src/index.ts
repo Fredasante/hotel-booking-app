@@ -14,6 +14,19 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const allowedOrigin = process.env.FRONTEND_URL;
+
+const corsOptions = {
+  origin: (origin: string | undefined, callback: Function) => {
+    if (allowedOrigin === origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
   .then(() => {
@@ -27,7 +40,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
