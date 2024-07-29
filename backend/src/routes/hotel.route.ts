@@ -39,4 +39,6 @@ router.post(
   createMyHotel
 );
 
+router.get("/my-hotels", verifyToken);
+
 export default router;

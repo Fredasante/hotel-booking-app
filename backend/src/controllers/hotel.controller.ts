@@ -31,3 +31,13 @@ export const createMyHotel = async (req: CustomRequest, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getMyHotels = async (req: CustomRequest, res: Response) => {
+  try {
+    const hotels = await Hotel.find({ userId: req.userId });
+    res.status(200).send(hotels);
+  } catch (error) {
+    console.log("Error getting hotels: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
