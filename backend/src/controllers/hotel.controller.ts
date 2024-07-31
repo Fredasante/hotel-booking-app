@@ -41,3 +41,20 @@ export const getMyHotels = async (req: CustomRequest, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getHotelById = async (req: CustomRequest, res: Response) => {
+  const id = req.params.id.toString();
+  try {
+    const hotel = await Hotel.findOne({
+      _id: id,
+      userId: req.userId,
+    });
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+    res.json(hotel);
+  } catch (error) {
+    console.log("Error getting hotel: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
