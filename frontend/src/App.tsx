@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateHotel from "./pages/CreateHotel";
 import NavLayout from "./layouts/NavLayout";
 import MyHotels from "./pages/MyHotels";
+import EditHotel from "./pages/EditHotel";
 
 export default function App() {
   return (
@@ -66,6 +67,16 @@ export default function App() {
             element={
               <Layout>
                 <MyHotels />
+              </Layout>
+            }
+          />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/edit-hotel/:hotelId"
+            element={
+              <Layout>
+                <EditHotel />
               </Layout>
             }
           />

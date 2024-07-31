@@ -51,9 +51,9 @@ export const useGetHotels = () => {
   return { hotels, isLoading };
 };
 
-export const useGetHotelbyId = (id: string) => {
+export const useGetHotelbyId = (hotelId: string) => {
   const getHotel = async (): Promise<HotelType> => {
-    const response = await fetch(`${API_BASE_URL}/api/hotel/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/hotel/${hotelId}`, {
       credentials: "include",
     });
     if (!response.ok) {
@@ -62,8 +62,8 @@ export const useGetHotelbyId = (id: string) => {
     }
     return response.json();
   };
-
-  const { data: hotel, isLoading } = useQuery(["hotel", id], getHotel, {
+  const { data: hotel, isLoading } = useQuery(["hotel", hotelId], getHotel, {
+    enabled: !!hotelId, // Only run the query if id is defined
     onError: () => {
       toast.error("Failed to get hotel");
     },

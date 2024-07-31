@@ -4,10 +4,14 @@ import HotelTypeSection from "./HotelTypeSection";
 import HotelFacilitiesSection from "./HotelFacilitiesSection";
 import HotelGuestsSection from "./HotelGuestsSection";
 import HotelImagesSection from "./HotelImagesSection";
+import { HotelType } from "../../types/types";
+import { useEffect } from "react";
 
 type Props = {
   onSave: (hotelFormData: FormData) => void;
-  isCreateLoading: boolean;
+  isCreateLoading?: boolean;
+  isEditLoading?: boolean;
+  hotel?: HotelType;
 };
 
 export type HotelFormData = {
@@ -24,9 +28,20 @@ export type HotelFormData = {
   imageFiles: FileList;
 };
 
-const ManageHotelForm = ({ onSave, isCreateLoading }: Props) => {
+const ManageHotelForm = ({
+  onSave,
+  isCreateLoading,
+  isEditLoading,
+  hotel,
+}: Props) => {
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
+
+  useEffect(() => {
+    if (hotel) {
+      reset(hotel);
+    }
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
@@ -62,11 +77,11 @@ const ManageHotelForm = ({ onSave, isCreateLoading }: Props) => {
           <HotelImagesSection />
           <div className="mt-5 md:mt-10 max-w-md mx-auto">
             <button
-              disabled={isCreateLoading}
+              disabled={isCreateLoading || isEditLoading}
               type="submit"
               className="mt-8 flex items-center justify-center text-sm w-full rounded-md px-6 py-3 tracking-wide text-white bg-[#ECB21C] disabled:bg-yellow-200"
             >
-              {isCreateLoading ? "Saving..." : "Save"}
+              {isCreateLoading || isEditLoading ? "Saving..." : "Save"}
             </button>
           </div>
         </div>
