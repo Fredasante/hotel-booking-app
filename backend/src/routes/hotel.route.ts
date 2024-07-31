@@ -1,7 +1,7 @@
 import express from "express";
 import verifyToken from "../middleware/auth";
 import multer from "multer";
-import { createMyHotel } from "../controllers/hotel.controller";
+import { createMyHotel, getMyHotels } from "../controllers/hotel.controller";
 import { body } from "express-validator";
 
 const router = express.Router();
@@ -39,6 +39,6 @@ router.post(
   createMyHotel
 );
 
-router.get("/my-hotels", verifyToken);
+router.get("/my-hotels", verifyToken, getMyHotels);
 
 export default router;

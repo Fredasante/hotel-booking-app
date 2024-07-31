@@ -1,5 +1,6 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
+import { HotelType } from "../types/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -27,4 +28,25 @@ export const useCreateHotel = () => {
   });
 
   return { createHotel, isLoading };
+};
+
+export const useGetHotels = () => {
+  const getHotels = async (): Promise<HotelType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/hotel/my-hotels`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData || "Failed to get hotels");
+    }
+    return response.json();
+  };
+
+  const { data: hotels, isLoading } = useQuery("hotels", getHotels, {
+    onError: () => {
+      toast.error("Failed to get hotels");
+    },
+  });
+
+  return { hotels, isLoading };
 };
