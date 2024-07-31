@@ -50,3 +50,24 @@ export const useGetHotels = () => {
 
   return { hotels, isLoading };
 };
+
+export const useGetHotelbyId = (id: string) => {
+  const getHotel = async (): Promise<HotelType> => {
+    const response = await fetch(`${API_BASE_URL}/api/hotel/${id}`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData || "Failed to get hotel");
+    }
+    return response.json();
+  };
+
+  const { data: hotel, isLoading } = useQuery(["hotel", id], getHotel, {
+    onError: () => {
+      toast.error("Failed to get hotel");
+    },
+  });
+
+  return { hotel, isLoading };
+};
