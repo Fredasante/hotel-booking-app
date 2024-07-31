@@ -8,6 +8,7 @@ const HotelTypeSection = () => {
     watch,
     formState: { errors },
   } = useFormContext<HotelFormData>();
+
   const typeWatch = watch("type");
 
   return (

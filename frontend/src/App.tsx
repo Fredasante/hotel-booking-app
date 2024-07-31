@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateHotel from "./pages/CreateHotel";
 import NavLayout from "./layouts/NavLayout";
-import Hotels from "./pages/Hotels";
+import MyHotels from "./pages/MyHotels";
 
 export default function App() {
   return (
@@ -65,7 +65,7 @@ export default function App() {
             path="/my-hotels"
             element={
               <Layout>
-                <Hotels />
+                <MyHotels />
               </Layout>
             }
           />
