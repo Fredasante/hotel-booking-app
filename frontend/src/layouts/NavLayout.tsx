@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderAlt from "../components/HeaderAlt";
+import HeaderAlt from "../components/header/HeaderAlt";
 
 const NavLayout = ({ children }: { children: React.ReactNode }) => {
   return (

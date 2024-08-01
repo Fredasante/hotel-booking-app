@@ -15,6 +15,7 @@ import NavLayout from "./layouts/NavLayout";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import ManageAccount from "./pages/ManageAccount";
+import MainLayout from "./layouts/MainLayout";
 
 export default function App() {
   return (
@@ -58,9 +59,9 @@ export default function App() {
           <Route
             path="/create-hotel"
             element={
-              <Layout>
+              <MainLayout>
                 <CreateHotel />
-              </Layout>
+              </MainLayout>
             }
           />
         </Route>
@@ -68,9 +69,9 @@ export default function App() {
           <Route
             path="/my-hotels"
             element={
-              <Layout>
+              <MainLayout>
                 <MyHotels />
-              </Layout>
+              </MainLayout>
             }
           />
         </Route>
@@ -78,9 +79,9 @@ export default function App() {
           <Route
             path="/edit-hotel/:hotelId"
             element={
-              <Layout>
+              <MainLayout>
                 <EditHotel />
-              </Layout>
+              </MainLayout>
             }
           />
         </Route>
@@ -90,9 +91,9 @@ export default function App() {
           <Route
             path="/manage-account"
             element={
-              <Layout>
+              <MainLayout>
                 <ManageAccount />
-              </Layout>
+              </MainLayout>
             }
           />
         </Route>

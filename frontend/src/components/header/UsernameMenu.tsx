@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,9 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
-import { useLogOutUser } from "../api/UserApi";
+import { useLogOutUser } from "../../api/UserApi";
 
 const UsernameMenu = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);

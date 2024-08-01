@@ -1,15 +1,15 @@
 import Footer from "../components/Footer";
-import Header from "../components/header/Header";
 import React from "react";
+import MainHeader from "../components/header/MainHeader";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <MainHeader />
       <div className="max-w-6xl mx-auto flex-1 w-full">{children}</div>
       <Footer />
     </div>
   );
 };
 
-export default Layout;
+export default MainLayout;

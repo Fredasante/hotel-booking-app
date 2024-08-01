@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import MainNav from "./MainNavigation";
 import MobileNav from "./MobileNavigation";
-import logo from "../assets/logo.svg";
+import logo from "../../assets/logo.svg";
 
-const HeaderAlt = () => {
+const MainHeader = () => {
   return (
     <header className="bg-[#003B95] py-4 px-5 md:px-10 lg:px-20">
       <div className="max-w-6xl mx-auto">
@@ -24,4 +24,4 @@ const HeaderAlt = () => {
   );
 };
 
-export default HeaderAlt;
+export default MainHeader;

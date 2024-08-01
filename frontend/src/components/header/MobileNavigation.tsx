@@ -4,13 +4,13 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
-import { Separator } from "./ui/separator";
-import { RootState } from "../redux/store";
+} from "../ui/sheet";
+import { Separator } from "../ui/separator";
+import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-import MobileNavLinks from "./MobileNavLinks";
 import { useSelector } from "react-redux";
 import { FaAlignJustify } from "react-icons/fa";
+import MobileNavLinks from "./MobileNavLinks";
 
 const MobileNav = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);

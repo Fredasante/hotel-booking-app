@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.svg";
+import { useSelector } from "react-redux";
 import MainNav from "./MainNavigation";
 import MobileNav from "./MobileNavigation";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import logo from "../assets/logo.svg";
+import { RootState } from "../../redux/store";
 
 const Header = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
