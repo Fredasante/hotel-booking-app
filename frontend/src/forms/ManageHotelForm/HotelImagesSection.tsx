@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { IoCloudUploadOutline } from "react-icons/io5";
+import { IoCloseOutline, IoCloudUploadOutline } from "react-icons/io5";
 import { HotelFormData } from "./ManageHotelForm";
 
 const HotelImagesSection = () => {
@@ -7,9 +7,19 @@ const HotelImagesSection = () => {
     register,
     watch,
     formState: { errors },
+    setValue,
   } = useFormContext<HotelFormData>();
 
   const imageFiles = watch("imageFiles") || [];
+
+  const existingImageUrls = watch("imageUrls");
+
+  const handleDeleteImage = (index: number) => {
+    const newImageUrls = existingImageUrls.filter(
+      (_, imageUrlIndex) => imageUrlIndex !== index
+    );
+    setValue("imageUrls", newImageUrls);
+  };
 
   return (
     <div className="my-6 pt-2">
@@ -17,6 +27,30 @@ const HotelImagesSection = () => {
       <span className="text-xs text-gray-600">
         Maximum of 6 images allowed.
       </span>
+
+      {existingImageUrls && (
+        <div className="flex flex-wrap mt-4">
+          {existingImageUrls.map((imageUrl, index) => (
+            <div
+              key={index}
+              className="relative w-24 h-24 rounded-md overflow-hidden mr-2 mb-2"
+            >
+              <img
+                src={imageUrl}
+                alt="hotel"
+                className="w-full h-full object-cover"
+              />
+              <button
+                onClick={() => handleDeleteImage(index)}
+                type="button"
+                className="absolute top-0 right-0 bg-white text-gray-500 p-1 rounded-full"
+              >
+                <IoCloseOutline size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       <label
         htmlFor="uploadFile"
@@ -27,7 +61,8 @@ const HotelImagesSection = () => {
         <input
           {...register("imageFiles", {
             validate: (imageFiles) => {
-              const totalLength = imageFiles.length;
+              const totalLength =
+                imageFiles.length + (existingImageUrls?.length || 0);
               if (totalLength === 0) {
                 return "At least one image is required";
               }
