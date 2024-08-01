@@ -14,6 +14,7 @@ import CreateHotel from "./pages/CreateHotel";
 import NavLayout from "./layouts/NavLayout";
 import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
+import ManageAccount from "./pages/ManageAccount";
 
 export default function App() {
   return (
@@ -51,6 +52,8 @@ export default function App() {
             </NavLayout>
           }
         />
+
+        {/* hotel routes */}
         <Route element={<PrivateRoute />}>
           <Route
             path="/create-hotel"
@@ -77,6 +80,18 @@ export default function App() {
             element={
               <Layout>
                 <EditHotel />
+              </Layout>
+            }
+          />
+        </Route>
+
+        {/* user-routes */}
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/manage-account"
+            element={
+              <Layout>
+                <ManageAccount />
               </Layout>
             }
           />
