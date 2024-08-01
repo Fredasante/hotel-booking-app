@@ -4,8 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Link, useNavigate } from "react-router-dom";
@@ -39,14 +37,15 @@ const UsernameMenu = () => {
           </span>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="px-2">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <Link to="/user-profile">
-          <DropdownMenuItem>Profile </DropdownMenuItem>
+      <DropdownMenuContent className="px-3 mt-1">
+        <Link to="/manage-account">
+          <DropdownMenuItem>Manage Account</DropdownMenuItem>
         </Link>
         <Link to="/create-hotel">
           <DropdownMenuItem>Create Hotel</DropdownMenuItem>
+        </Link>
+        <Link to="/my-hotels">
+          <DropdownMenuItem>Hotel Management</DropdownMenuItem>
         </Link>
         <DropdownMenuItem>
           <button

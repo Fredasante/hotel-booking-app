@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UsernameMenu from "./UsernameMenu";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
 
 const MainNav = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
