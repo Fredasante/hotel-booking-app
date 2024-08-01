@@ -71,3 +71,32 @@ export const useGetHotelbyId = (hotelId: string) => {
 
   return { hotel, isLoading };
 };
+
+export const useUpdateHotel = () => {
+  const updateHotelUser = async (hotelFormData: FormData) => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/hotel/${hotelFormData.get("hotelId")}`,
+      {
+        credentials: "include",
+        method: "PUT",
+        body: hotelFormData,
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData || "Failed to update hotel");
+    }
+    return response.json();
+  };
+
+  const { mutateAsync: updateHotel, isLoading } = useMutation(updateHotelUser, {
+    onSuccess: () => {
+      toast.success("Hotel updated successfully");
+    },
+    onError: () => {
+      toast.error("Failed to update hotel");
+    },
+  });
+
+  return { updateHotel, isLoading };
+};

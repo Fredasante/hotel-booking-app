@@ -46,6 +46,11 @@ const ManageHotelForm = ({
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
+
+    if (hotel) {
+      formData.append("hotelId", hotel._id);
+    }
+
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -59,6 +64,12 @@ const ManageHotelForm = ({
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
+
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((imageUrl, index) => {
+        formData.append(`imageUrls[${index}]`, imageUrl);
+      });
+    }
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append("imageFiles", imageFile);

@@ -48,6 +48,6 @@ router.get("/my-hotels", verifyToken, getMyHotels);
 
 router.get("/:id", verifyToken, getHotelById);
 
-router.put("/:id", verifyToken, upload.array("imageFiles"), updateHotel);
+router.put("/:hotelId", verifyToken, upload.array("imageFiles"), updateHotel);
 
 export default router;
