@@ -17,7 +17,11 @@ const CreateHotel = () => {
 
   return (
     <div className="p-5">
-      <ManageHotelForm onSave={handleSave} isCreateLoading={isCreateLoading} />
+      <ManageHotelForm
+        title="Create Hotel"
+        onSave={handleSave}
+        isCreateLoading={isCreateLoading}
+      />
     </div>
   );
 };

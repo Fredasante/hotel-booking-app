@@ -19,6 +19,7 @@ const EditHotel = () => {
   return (
     <div>
       <ManageHotelForm
+        title="Edit Hotel"
         hotel={hotel}
         onSave={handleSave}
         isEditLoading={isEditLoading}

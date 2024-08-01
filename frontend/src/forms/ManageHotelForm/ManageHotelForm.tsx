@@ -12,6 +12,7 @@ type Props = {
   isCreateLoading?: boolean;
   isEditLoading?: boolean;
   hotel?: HotelType;
+  title: string;
 };
 
 export type HotelFormData = {
@@ -34,6 +35,7 @@ const ManageHotelForm = ({
   isCreateLoading,
   isEditLoading,
   hotel,
+  title,
 }: Props) => {
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
@@ -82,6 +84,9 @@ const ManageHotelForm = ({
     <FormProvider {...formMethods}>
       <form onSubmit={onSubmit} className="mx-4 mb-4 my-10">
         <div className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
+          <h2 className="sm:text-3xl text-2xl text-center font-bold mb-7">
+            {title}
+          </h2>
           <HotelDetailsSection />
           <HotelTypeSection />
           <HotelFacilitiesSection />
@@ -91,7 +96,7 @@ const ManageHotelForm = ({
             <button
               disabled={isCreateLoading || isEditLoading}
               type="submit"
-              className="mt-8 flex items-center justify-center text-sm w-full rounded-md px-6 py-3 tracking-wide text-white bg-[#ECB21C] disabled:bg-yellow-200"
+              className="mt-8 flex items-center justify-center text-sm w-full rounded-md px-6 py-3 tracking-wide text-white bg-[#ECB21C] disabled:bg-yellow-300"
             >
               {isCreateLoading || isEditLoading ? "Saving..." : "Save"}
             </button>

@@ -3,17 +3,35 @@ import bcrypt from "bcryptjs";
 
 export type UserType = {
   _id: string;
-  firstName: string;
-  lastName: string;
   email: string;
   password: string;
-  displayName: string;
+  firstName: string;
+  lastName: string;
+  displayName?: string;
   profilePicture: string;
+  phoneNumber?: string;
+  dateOfBirth?: Date;
+  nationality?: string;
+  gender?: "Male" | "Female" | "Other" | "Prefer not to say";
+  address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+  };
+  passportDetails?: {
+    firstName?: string;
+    lastName?: string;
+    number?: string;
+    expiryDate?: Date;
+    issuingCountry?: string;
+  };
 };
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -22,6 +40,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    },
+    phoneNumber: { type: String },
+    dateOfBirth: { type: Date },
+    nationality: { type: String },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other", "Prefer not to say"],
+    },
+    address: {
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      postalCode: { type: String },
+      country: { type: String },
+    },
+    passportDetails: {
+      number: { type: String },
+      expiryDate: { type: Date },
+      issuingCountry: { type: String },
     },
   },
   { timestamps: true }

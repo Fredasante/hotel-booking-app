@@ -9,9 +9,9 @@ const MainNav = () => {
     <>
       {currentUser ? (
         <div className="ml-auto hidden md:flex items-center">
-          <Link to="/" className="font-bold text-md mr-7">
+          <Link to="/my-hotels" className="font-bold text-md mr-7">
             <span className="text-white font-semibold cursor-pointer hidden md:block">
-              List Your Property
+              Manage Hotels
             </span>
           </Link>
           <UsernameMenu />

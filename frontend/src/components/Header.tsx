@@ -31,7 +31,7 @@ const Header = () => {
                 : "Find Your Next Stay"}
             </h1>
             <p className="mt-3 mb-10 text-sm md:text-base lg:text-xl 2xl:text-2xl">
-              Search deals on hotels, homes, and much more...
+              Search deals on hotels, apartments, and much more...
             </p>
           </div>
         </div>

@@ -9,10 +9,6 @@ const HotelDetailsSection = () => {
   return (
     <div>
       <div>
-        <h2 className="sm:text-3xl text-2xl text-center font-bold mb-7">
-          Create Hotel
-        </h2>
-
         <div className="mb-5">
           <label className="text-gray-800 text-sm mb-2 block">Name</label>
           <input

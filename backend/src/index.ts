@@ -4,6 +4,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.route";
 import hotelRoutes from "./routes/hotel.route";
+import userRoutes from "./routes/accountManagement.route";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/hotel", hotelRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(7000, () => {
   console.log("Server running on localhost:7000");
