@@ -5,6 +5,7 @@ import {
   createMyHotel,
   getHotelById,
   getMyHotels,
+  updateHotel,
 } from "../controllers/hotel.controller";
 import { body } from "express-validator";
 
@@ -46,5 +47,7 @@ router.post(
 router.get("/my-hotels", verifyToken, getMyHotels);
 
 router.get("/:id", verifyToken, getHotelById);
+
+router.put("/:id", verifyToken, upload.array("imageFiles"), updateHotel);
 
 export default router;

@@ -60,3 +60,40 @@ export const getHotelById = async (req: CustomRequest, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const updateHotel = async (req: CustomRequest, res: Response) => {
+  const id = req.params.id.toString();
+  try {
+    const hotel = await Hotel.findOne({
+      _id: id,
+      userId: req.userId,
+    });
+
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+
+    const imageFiles = req.files as Express.Multer.File[];
+    const newHotel: HotelType = req.body;
+
+    if (imageFiles) {
+      const uploadPromises = imageFiles.map(async (image) => {
+        const b64 = Buffer.from(image.buffer).toString("base64");
+        let dataURI = `data:${image.mimetype};base64,${b64}`;
+        const res = await cloudinary.v2.uploader.upload(dataURI);
+        return res.url;
+      });
+
+      const imageUrls = await Promise.all(uploadPromises);
+      newHotel.imageUrls = imageUrls;
+    }
+
+    newHotel.lastUpdated = new Date();
+
+    await Hotel.updateOne({ _id: id }, newHotel);
+    res.status(200).json({ message: "Hotel updated successfully" });
+  } catch (error) {
+    console.error("Error updating hotel:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
