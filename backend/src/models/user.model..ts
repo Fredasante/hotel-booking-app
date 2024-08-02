@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
-export type UserType = {
-  _id: string;
+// Define the UserType interface
+export interface UserType extends Document {
   email: string;
   password: string;
   firstName: string;
@@ -27,9 +27,10 @@ export type UserType = {
     expiryDate?: Date;
     issuingCountry?: string;
   };
-};
+}
 
-const userSchema = new mongoose.Schema(
+// Define the user schema
+const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -56,6 +57,8 @@ const userSchema = new mongoose.Schema(
       country: { type: String },
     },
     passportDetails: {
+      firstName: { type: String },
+      lastName: { type: String },
       number: { type: String },
       expiryDate: { type: Date },
       issuingCountry: { type: String },
@@ -64,6 +67,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Hash the password before saving the user
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 8);
@@ -71,6 +75,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Create the User model
 const User = mongoose.model<UserType>("User", userSchema);
 
 export default User;

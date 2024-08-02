@@ -14,6 +14,25 @@ export interface HotelType {
   imageUrls: string[];
   lastUpdated: Date;
 }
+
+export interface AddressType {
+  street?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface PassportDetailsType {
+  firstName?: string;
+  lastName?: string;
+  number?: string;
+  expirationMonth?: string;
+  expirationDay?: string;
+  expirationYear?: string;
+  issuingCountry?: string;
+  consent?: boolean;
+}
+
 export interface UserFormType {
   _id: string;
   email: string;
@@ -28,20 +47,4 @@ export interface UserFormType {
   gender?: "Male" | "Female" | "Other" | "Prefer not to say";
   address?: AddressType;
   passportDetails?: PassportDetailsType;
-}
-
-export interface AddressType {
-  street?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  country?: string;
-}
-
-export interface PassportDetailsType {
-  firstName?: string;
-  lastName?: string;
-  number?: string;
-  expiryDate?: Date;
-  issuingCountry?: string;
 }

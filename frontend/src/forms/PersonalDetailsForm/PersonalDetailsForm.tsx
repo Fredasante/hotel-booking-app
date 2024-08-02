@@ -8,6 +8,9 @@ import EmailAddressSection from "./EmailAddressSection";
 import PhoneSection from "./PhoneSection";
 import DateOfBirthSection from "./DateOfBirthSection";
 import NationalitySection from "./NationalitySection";
+import GenderSection from "./GenderSection";
+import AddressSection from "./AddressSection";
+import PassportSection from "./PassportSection";
 
 const PersonalDetailsForm = () => {
   const { userDetails } = useGetUserDetails();
@@ -19,8 +22,25 @@ const PersonalDetailsForm = () => {
       displayName: userDetails?.displayName || "",
       email: userDetails?.email || "",
       phoneNumber: userDetails?.phoneNumber || "",
-      dateOfBirth: userDetails?.dateOfBirth || "",
+      dateOfBirth: userDetails?.dateOfBirth || undefined,
       nationality: userDetails?.nationality || "",
+      gender: userDetails?.gender || "Prefer not to say",
+      address: {
+        street: userDetails?.address?.street || "",
+        city: userDetails?.address?.city || "",
+        postalCode: userDetails?.address?.postalCode || "",
+        country: userDetails?.address?.country || "",
+      },
+      passportDetails: {
+        firstName: userDetails?.passportDetails?.firstName || "",
+        lastName: userDetails?.passportDetails?.lastName || "",
+        number: userDetails?.passportDetails?.number || "",
+        expirationMonth: userDetails?.passportDetails?.expirationMonth || "",
+        expirationDay: userDetails?.passportDetails?.expirationDay || "",
+        expirationYear: userDetails?.passportDetails?.expirationYear || "",
+        issuingCountry: userDetails?.passportDetails?.issuingCountry || "",
+        consent: userDetails?.passportDetails?.consent || false,
+      },
     },
   });
 
@@ -34,6 +54,23 @@ const PersonalDetailsForm = () => {
         phoneNumber: userDetails.phoneNumber,
         dateOfBirth: userDetails.dateOfBirth,
         nationality: userDetails.nationality,
+        gender: userDetails.gender,
+        address: {
+          street: userDetails.address?.street || "",
+          city: userDetails.address?.city || "",
+          postalCode: userDetails.address?.postalCode || "",
+          country: userDetails.address?.country || "",
+        },
+        passportDetails: {
+          firstName: userDetails.passportDetails?.firstName || "",
+          lastName: userDetails.passportDetails?.lastName || "",
+          number: userDetails.passportDetails?.number || "",
+          expirationMonth: userDetails.passportDetails?.expirationMonth || "",
+          expirationDay: userDetails.passportDetails?.expirationDay || "",
+          expirationYear: userDetails.passportDetails?.expirationYear || "",
+          issuingCountry: userDetails.passportDetails?.issuingCountry || "",
+          consent: userDetails.passportDetails?.consent || false,
+        },
       });
     }
   }, [userDetails, formMethods]);
@@ -51,6 +88,9 @@ const PersonalDetailsForm = () => {
         <PhoneSection />
         <DateOfBirthSection />
         <NationalitySection />
+        <GenderSection />
+        <AddressSection />
+        <PassportSection />
       </form>
     </FormProvider>
   );
