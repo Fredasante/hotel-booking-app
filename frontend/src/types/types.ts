@@ -14,3 +14,34 @@ export interface HotelType {
   imageUrls: string[];
   lastUpdated: Date;
 }
+export interface UserFormType {
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  displayName?: string;
+  profilePicture: string;
+  phoneNumber?: string;
+  dateOfBirth?: Date;
+  nationality?: string;
+  gender?: "Male" | "Female" | "Other" | "Prefer not to say";
+  address?: AddressType;
+  passportDetails?: PassportDetailsType;
+}
+
+export interface AddressType {
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface PassportDetailsType {
+  firstName?: string;
+  lastName?: string;
+  number?: string;
+  expiryDate?: Date;
+  issuingCountry?: string;
+}
