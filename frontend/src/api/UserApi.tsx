@@ -10,7 +10,7 @@ import {
   signOut,
 } from "../redux/user/userSlice";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 export const useRegisterUser = () => {
   const register = async (formData: RegisterFormData) => {
