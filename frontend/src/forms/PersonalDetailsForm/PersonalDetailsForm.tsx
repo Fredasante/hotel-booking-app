@@ -6,6 +6,8 @@ import { useGetUserDetails } from "../../api/UserSettingsApi";
 import { useEffect } from "react";
 import EmailAddressSection from "./EmailAddressSection";
 import PhoneSection from "./PhoneSection";
+import DateOfBirthSection from "./DateOfBirthSection";
+import NationalitySection from "./NationalitySection";
 
 const PersonalDetailsForm = () => {
   const { userDetails } = useGetUserDetails();
@@ -17,6 +19,8 @@ const PersonalDetailsForm = () => {
       displayName: userDetails?.displayName || "",
       email: userDetails?.email || "",
       phoneNumber: userDetails?.phoneNumber || "",
+      dateOfBirth: userDetails?.dateOfBirth || "",
+      nationality: userDetails?.nationality || "",
     },
   });
 
@@ -28,6 +32,8 @@ const PersonalDetailsForm = () => {
         displayName: userDetails.displayName,
         email: userDetails.email,
         phoneNumber: userDetails.phoneNumber,
+        dateOfBirth: userDetails.dateOfBirth,
+        nationality: userDetails.nationality,
       });
     }
   }, [userDetails, formMethods]);
@@ -43,6 +49,8 @@ const PersonalDetailsForm = () => {
         <DisplayNameSection />
         <EmailAddressSection />
         <PhoneSection />
+        <DateOfBirthSection />
+        <NationalitySection />
       </form>
     </FormProvider>
   );
