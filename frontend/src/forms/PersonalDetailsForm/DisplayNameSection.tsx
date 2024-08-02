@@ -1,31 +1,28 @@
 import { useState } from "react";
+import { UserFormType } from "../../types/types";
+import { useFormContext } from "react-hook-form";
 
 const DisplayNameSection = () => {
+  const { register, watch } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState("Koo");
-  const [lastName, setLastName] = useState("Yaw");
-  const [tempFirstName, setTempFirstName] = useState(firstName);
-  const [tempLastName, setTempLastName] = useState(lastName);
+
+  const displayName = watch("displayName");
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleSaveClick = () => {
-    setFirstName(tempFirstName);
-    setLastName(tempLastName);
     setIsEditing(false);
   };
 
   const handleCancelClick = () => {
-    setTempFirstName(firstName);
-    setTempLastName(lastName);
     setIsEditing(false);
   };
 
   return (
     <div className="py-4 flex gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
-      <span className="w-32 md:w-40 whitespace-nowrap">Display Name:</span>
+      <span className="w-32 md:w-40 whitespace-nowrap">Display Name</span>
 
       {isEditing ? (
         <div className="space-y-2 w-full">
@@ -35,10 +32,7 @@ const DisplayNameSection = () => {
                 Display Name
               </label>
               <input
-                id="firstName"
-                type="text"
-                value={tempFirstName}
-                onChange={(e) => setTempFirstName(e.target.value)}
+                {...register("displayName")}
                 className="text-input text-black"
               />
             </div>
@@ -64,7 +58,9 @@ const DisplayNameSection = () => {
           className="flex space-x-2 w-full cursor-pointer"
           onClick={handleEditClick}
         >
-          <span className="flex-grow text-gray-600">Choose a display name</span>
+          <span className="flex-grow text-gray-700">
+            {displayName ? displayName : "Choose a display name"}
+          </span>
           <button className="text-blue-700 font-semibold">Edit</button>
         </div>
       )}

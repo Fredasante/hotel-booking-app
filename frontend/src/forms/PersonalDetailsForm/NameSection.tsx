@@ -1,31 +1,28 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { UserFormType } from "../../types/types";
 
 const NameSection = () => {
+  const { register, watch } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState("Koo");
-  const [lastName, setLastName] = useState("Yaw");
-  const [tempFirstName, setTempFirstName] = useState(firstName);
-  const [tempLastName, setTempLastName] = useState(lastName);
+  const firstName = watch("firstName");
+  const lastName = watch("lastName");
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleSaveClick = () => {
-    setFirstName(tempFirstName);
-    setLastName(tempLastName);
     setIsEditing(false);
   };
 
   const handleCancelClick = () => {
-    setTempFirstName(firstName);
-    setTempLastName(lastName);
     setIsEditing(false);
   };
 
   return (
     <div className="py-4 flex justify-between gap-2 md:gap-5 lg:gap-10 border-t border-b border-gray-200">
-      <span className="w-32 md:w-40">Name:</span>
+      <span className="w-32 md:w-40">Name</span>
 
       {isEditing ? (
         <div className="space-y-2 w-full">
@@ -35,10 +32,7 @@ const NameSection = () => {
                 First name(s)
               </label>
               <input
-                id="firstName"
-                type="text"
-                value={tempFirstName}
-                onChange={(e) => setTempFirstName(e.target.value)}
+                {...register("firstName")}
                 className="text-input text-black"
               />
             </div>
@@ -47,10 +41,8 @@ const NameSection = () => {
                 Last name(s)
               </label>
               <input
-                id="lastName"
                 type="text"
-                value={tempLastName}
-                onChange={(e) => setTempLastName(e.target.value)}
+                {...register("lastName")}
                 className="text-input"
               />
             </div>
@@ -75,7 +67,7 @@ const NameSection = () => {
           className="flex space-x-2 w-full cursor-pointer"
           onClick={handleEditClick}
         >
-          <span className="flex-grow text-gray-600">
+          <span className="flex-grow text-gray-700">
             {firstName} {lastName}
           </span>
           <button className="text-blue-700 font-semibold">Edit</button>
