@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Hotel Booking Application is an intuitive web app designed for managing and booking hotels. This application allows users to browse hotels, view their details, and make reservations. The project is currently under development and aims to provide a seamless experience for hotel booking.
+The Hotel Booking Application is a web app designed for managing and booking hotels. This application allows users to browse hotels, view their details, and make reservations. The project is currently under development and aims to provide a seamless experience for hotel booking.
 
 ## Features
 
