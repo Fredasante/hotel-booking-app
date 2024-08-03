@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { UserFormType } from "../../types/types";
 import NameSection from "./NameSection";
 import DisplayNameSection from "./DisplayNameSection";
@@ -75,6 +75,12 @@ const PersonalDetailsForm = () => {
     }
   }, [userDetails, formMethods]);
 
+  const onSave: SubmitHandler<UserFormType> = (data) => {
+    // Handle form submission
+    console.log("Form data:", data);
+    // Perform save logic here
+  };
+
   return (
     <FormProvider {...formMethods}>
       <form>
@@ -82,8 +88,8 @@ const PersonalDetailsForm = () => {
         <p className="text-gray-700 mb-3">
           Update your info and find out how it's used.
         </p>
-        <NameSection />
-        <DisplayNameSection />
+        <NameSection onSave={formMethods.handleSubmit(onSave)} />
+        <DisplayNameSection onSave={formMethods.handleSubmit(onSave)} />
         <EmailAddressSection />
         <PhoneSection />
         <DateOfBirthSection />

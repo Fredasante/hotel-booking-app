@@ -2,8 +2,17 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { UserFormType } from "../../types/types";
 
-const NameSection = () => {
-  const { register, watch } = useFormContext<UserFormType>();
+interface NameSectionProps {
+  onSave: () => void;
+}
+
+const NameSection = ({ onSave }: NameSectionProps) => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+    trigger,
+  } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
   const firstName = watch("firstName");
   const lastName = watch("lastName");
@@ -12,12 +21,16 @@ const NameSection = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
+  const handleCancelClick = () => {
     setIsEditing(false);
   };
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    const isValid = await trigger(["firstName", "lastName"]);
+    if (isValid) {
+      onSave();
+      setIsEditing(false);
+    }
   };
 
   return (
@@ -32,9 +45,16 @@ const NameSection = () => {
                 First name(s)
               </label>
               <input
-                {...register("firstName")}
+                {...register("firstName", {
+                  required: "First name is required",
+                })}
                 className="text-input text-black"
               />
+              {errors.firstName && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.firstName.message}
+                </span>
+              )}
             </div>
             <div className="flex flex-col w-full md:w-1/2">
               <label className="font-semibold text-sm" htmlFor="lastName">
@@ -42,18 +62,25 @@ const NameSection = () => {
               </label>
               <input
                 type="text"
-                {...register("lastName")}
+                {...register("lastName", { required: "Last name is required" })}
                 className="text-input"
               />
+              {errors.lastName && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.lastName.message}
+                </span>
+              )}
             </div>
             <div className="flex flex-row justify-between md:flex-col md:gap-4 lg:gap-10 mt-3 space-x-2 ml-0 md:ml-5 lg:ml-20">
               <button
+                type="button"
                 onClick={handleCancelClick}
                 className="text-blue-700 text-sm font-semibold p-2 rounded hover:bg-blue-50 transition-all"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleSaveClick}
                 className="bg-blue-600 text-white px-3 py-2 rounded"
               >
@@ -70,7 +97,9 @@ const NameSection = () => {
           <span className="flex-grow text-gray-700">
             {firstName} {lastName}
           </span>
-          <button className="text-blue-700 font-semibold">Edit</button>
+          <button type="button" className="text-blue-700 font-semibold">
+            Edit
+          </button>
         </div>
       )}
     </div>

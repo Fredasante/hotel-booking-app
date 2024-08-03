@@ -29,7 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
       { userId: newUser.id },
       process.env.JWT_SECRET_KEY as string,
       {
-        expiresIn: "1d", // 1 day in milliseconds
+        expiresIn: "1d",
       }
     );
     // Set the token as an HTTP-only cookie
