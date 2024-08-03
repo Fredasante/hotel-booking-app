@@ -33,6 +33,7 @@ export const updateProfile = async (req: CustomRequest, res: Response) => {
       firstName,
       lastName,
       displayName,
+      email,
       phoneNumber,
       dateOfBirth,
       nationality,
@@ -47,6 +48,7 @@ export const updateProfile = async (req: CustomRequest, res: Response) => {
         firstName,
         lastName,
         displayName,
+        email,
         phoneNumber,
         dateOfBirth,
         nationality,
@@ -54,7 +56,7 @@ export const updateProfile = async (req: CustomRequest, res: Response) => {
         address,
         passportDetails,
       },
-      { new: true }
+      { new: true, runValidators: true }
     ).select("-password");
 
     if (!user) {
