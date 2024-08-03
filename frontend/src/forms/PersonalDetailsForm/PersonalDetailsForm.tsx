@@ -14,69 +14,16 @@ import PassportSection from "./PassportSection";
 
 const PersonalDetailsForm = () => {
   const { userDetails } = useGetUserDetails();
-
-  const formMethods = useForm<UserFormType>({
-    defaultValues: {
-      firstName: userDetails?.firstName || "",
-      lastName: userDetails?.lastName || "",
-      displayName: userDetails?.displayName || "",
-      email: userDetails?.email || "",
-      phoneNumber: userDetails?.phoneNumber || "",
-      dateOfBirth: userDetails?.dateOfBirth || undefined,
-      nationality: userDetails?.nationality || "",
-      gender: userDetails?.gender || "Prefer not to say",
-      address: {
-        street: userDetails?.address?.street || "",
-        city: userDetails?.address?.city || "",
-        postalCode: userDetails?.address?.postalCode || "",
-        country: userDetails?.address?.country || "",
-      },
-      passportDetails: {
-        firstName: userDetails?.passportDetails?.firstName || "",
-        lastName: userDetails?.passportDetails?.lastName || "",
-        number: userDetails?.passportDetails?.number || "",
-        expirationMonth: userDetails?.passportDetails?.expirationMonth || "",
-        expirationDay: userDetails?.passportDetails?.expirationDay || "",
-        expirationYear: userDetails?.passportDetails?.expirationYear || "",
-        issuingCountry: userDetails?.passportDetails?.issuingCountry || "",
-        consent: userDetails?.passportDetails?.consent || false,
-      },
-    },
-  });
+  const formMethods = useForm<UserFormType>();
+  const { reset, handleSubmit } = formMethods;
 
   useEffect(() => {
     if (userDetails) {
-      formMethods.reset({
-        firstName: userDetails.firstName,
-        lastName: userDetails.lastName,
-        displayName: userDetails.displayName,
-        email: userDetails.email,
-        phoneNumber: userDetails.phoneNumber,
-        dateOfBirth: userDetails.dateOfBirth,
-        nationality: userDetails.nationality,
-        gender: userDetails.gender,
-        address: {
-          street: userDetails.address?.street || "",
-          city: userDetails.address?.city || "",
-          postalCode: userDetails.address?.postalCode || "",
-          country: userDetails.address?.country || "",
-        },
-        passportDetails: {
-          firstName: userDetails.passportDetails?.firstName || "",
-          lastName: userDetails.passportDetails?.lastName || "",
-          number: userDetails.passportDetails?.number || "",
-          expirationMonth: userDetails.passportDetails?.expirationMonth || "",
-          expirationDay: userDetails.passportDetails?.expirationDay || "",
-          expirationYear: userDetails.passportDetails?.expirationYear || "",
-          issuingCountry: userDetails.passportDetails?.issuingCountry || "",
-          consent: userDetails.passportDetails?.consent || false,
-        },
-      });
+      reset(userDetails);
     }
-  }, [userDetails, formMethods]);
+  }, [userDetails, reset]);
 
   const onSave: SubmitHandler<UserFormType> = (data) => {
-    // Handle form submission
     console.log("Form data:", data);
     // Perform save logic here
   };
@@ -88,10 +35,10 @@ const PersonalDetailsForm = () => {
         <p className="text-gray-700 mb-3">
           Update your info and find out how it's used.
         </p>
-        <NameSection onSave={formMethods.handleSubmit(onSave)} />
-        <DisplayNameSection onSave={formMethods.handleSubmit(onSave)} />
-        <EmailAddressSection />
-        <PhoneSection />
+        <NameSection onSave={handleSubmit(onSave)} />
+        <DisplayNameSection onSave={handleSubmit(onSave)} />
+        <EmailAddressSection onSave={handleSubmit(onSave)} />
+        <PhoneSection onSave={handleSubmit(onSave)} />
         <DateOfBirthSection />
         <NationalitySection />
         <GenderSection />

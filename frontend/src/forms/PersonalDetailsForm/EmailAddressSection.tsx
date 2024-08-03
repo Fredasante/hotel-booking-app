@@ -2,8 +2,17 @@ import { useState } from "react";
 import { UserFormType } from "../../types/types";
 import { useFormContext } from "react-hook-form";
 
-const EmailAddressSection = () => {
-  const { register, watch } = useFormContext<UserFormType>();
+interface EmailProps {
+  onSave: () => void;
+}
+
+const EmailAddressSection = ({ onSave }: EmailProps) => {
+  const {
+    register,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
 
   const email = watch("email");
@@ -12,8 +21,13 @@ const EmailAddressSection = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    const isValid = await trigger("email");
+
+    if (isValid) {
+      onSave();
+      setIsEditing(false);
+    }
   };
 
   const handleCancelClick = () => {
@@ -31,17 +45,29 @@ const EmailAddressSection = () => {
               <label className="font-semibold text-sm" htmlFor="email">
                 Email Address
               </label>
-              <input {...register("email")} className="text-input text-black" />
+              <input
+                {...register("email", {
+                  required: "Email address is required",
+                })}
+                className="text-input text-black"
+              />
+              {errors.email && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-row justify-between md:flex-col lg:gap-10 mt-3 space-x-2 ml-0 md:ml-5 lg:ml-20">
               <button
+                type="button"
                 onClick={handleCancelClick}
                 className="text-blue-700 text-sm font-semibold p-2 rounded hover:bg-blue-50 transition-all"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleSaveClick}
                 className="bg-blue-600 text-white px-3 py-2 rounded"
               >
@@ -57,7 +83,10 @@ const EmailAddressSection = () => {
         >
           <div className="flex items-start">
             <span className="flex-grow text-gray-700">{email}</span>
-            <button className="text-blue-700 font-semibold md:ml-4">
+            <button
+              type="button"
+              className="text-blue-700 font-semibold md:ml-4"
+            >
               Edit
             </button>
           </div>

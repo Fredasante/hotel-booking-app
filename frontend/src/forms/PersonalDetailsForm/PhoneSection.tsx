@@ -2,8 +2,17 @@ import { useState } from "react";
 import { UserFormType } from "../../types/types";
 import { useFormContext } from "react-hook-form";
 
-const PhoneSection = () => {
-  const { register, watch } = useFormContext<UserFormType>();
+interface PhoneSectionProps {
+  onSave: () => void;
+}
+
+const PhoneSection = ({ onSave }: PhoneSectionProps) => {
+  const {
+    register,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
 
   const phoneNumber = watch("phoneNumber");
@@ -12,8 +21,13 @@ const PhoneSection = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    const isValid = await trigger("phoneNumber");
+
+    if (isValid) {
+      onSave();
+      setIsEditing(false);
+    }
   };
 
   const handleCancelClick = () => {
@@ -32,19 +46,32 @@ const PhoneSection = () => {
                 Phone Number
               </label>
               <input
-                {...register("phoneNumber")}
+                {...register("phoneNumber", {
+                  required: "Phone number is required",
+                  pattern: {
+                    value: /^\d{10}$/,
+                    message: "Invalid phone number",
+                  },
+                })}
                 className="text-input text-black"
               />
+              {errors.phoneNumber && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.phoneNumber.message}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-row justify-between md:flex-col lg:gap-10 mt-3 space-x-2 ml-0 md:ml-5 lg:ml-20">
               <button
+                type="button"
                 onClick={handleCancelClick}
                 className="text-blue-700 text-sm font-semibold p-2 rounded hover:bg-blue-50 transition-all"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleSaveClick}
                 className="bg-blue-600 text-white px-3 py-2 rounded"
               >
@@ -62,7 +89,10 @@ const PhoneSection = () => {
             <span className="flex-grow text-gray-600">
               {phoneNumber ? phoneNumber : "Add your phone number"}
             </span>
-            <button className="text-blue-700 font-semibold md:ml-4">
+            <button
+              type="button"
+              className="text-blue-700 font-semibold md:ml-4"
+            >
               Edit
             </button>
           </div>
