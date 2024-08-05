@@ -30,6 +30,8 @@ const PersonalDetailsForm = () => {
     }
   }, [userDetails, reset]);
 
+  console.log(userDetails);
+
   const onSave: SubmitHandler<UserFormType> = async (formData) => {
     try {
       await updateUserDetails(formData);

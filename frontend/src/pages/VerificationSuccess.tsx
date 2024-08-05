@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useVerifyEmail } from "../api/UserApi";
 
 const VerificationSuccess = () => {
   const { search } = useLocation();
+  const navigate = useNavigate();
   const { verifyEmailToken } = useVerifyEmail();
   const [isVerified, setIsVerified] = useState(false);
 
@@ -18,12 +19,21 @@ const VerificationSuccess = () => {
           setIsVerified(true);
         })
         .catch((error: any) => {
+          console.error("Verification error:", error);
           toast.error(error.message || "Verification failed");
+          setIsVerified(false);
         });
     } else {
       toast.error("No verification token found");
+      setIsVerified(false);
     }
   }, [search, verifyEmailToken]);
+
+  useEffect(() => {
+    if (isVerified) {
+      navigate("/login");
+    }
+  }, [isVerified, navigate]);
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center">

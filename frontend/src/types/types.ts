@@ -31,6 +31,7 @@ export interface UserFormType {
   email: string;
   password: string;
   firstName: string;
+  isVerified?: boolean;
   lastName: string;
   displayName?: string;
   profilePicture: string;

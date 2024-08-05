@@ -37,6 +37,7 @@ const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
     verificationToken: { type: String, default: null },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
