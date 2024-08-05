@@ -16,6 +16,7 @@ import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
 import ManageAccount from "./pages/ManageAccount";
 import MainLayout from "./layouts/MainLayout";
+import VerificationSuccess from "./pages/VerificationSuccess";
 
 export default function App() {
   return (
@@ -50,6 +51,14 @@ export default function App() {
           element={
             <NavLayout>
               <Login />
+            </NavLayout>
+          }
+        />
+        <Route
+          path="/verify-success"
+          element={
+            <NavLayout>
+              <VerificationSuccess />
             </NavLayout>
           }
         />

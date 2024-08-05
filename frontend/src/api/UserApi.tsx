@@ -136,3 +136,31 @@ export const useLogOutUser = () => {
 
   return { logoutUser };
 };
+
+export const useVerifyEmail = () => {
+  const verifyEmail = async (token: string) => {
+    const response = await fetch(
+      `${API_BASE_URL}/api/auth/verify-email/${token}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to verify email");
+    }
+    return response.json();
+  };
+
+  const { mutateAsync: verifyEmailToken } = useMutation(verifyEmail, {
+    onSuccess: () => {
+      toast.success("Email verified successfully!");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to verify email");
+    },
+  });
+
+  return { verifyEmailToken };
+};
