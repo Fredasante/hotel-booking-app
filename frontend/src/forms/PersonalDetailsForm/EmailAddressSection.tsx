@@ -38,7 +38,7 @@ const EmailAddressSection = ({ onSave }: EmailProps) => {
       {isEditing ? (
         <div className="flex flex-col w-full">
           <div className="flex flex-wrap md:flex-nowrap justify-between">
-            <div className="flex flex-col w-full md:w-1/2 mr-2 mb-3">
+            <div className="flex flex-col w-full mr-2 mb-3">
               <label className="font-semibold text-sm" htmlFor="email">
                 Email Address
               </label>
@@ -53,6 +53,10 @@ const EmailAddressSection = ({ onSave }: EmailProps) => {
                   {errors.email.message}
                 </span>
               )}
+              <span className="mt-3 text-sm text-gray-600">
+                We&apos;ll send a verification link to your new email address –
+                check your inbox.
+              </span>
             </div>
 
             <div className="flex flex-row justify-between md:flex-col lg:gap-10 mt-3 space-x-2 ml-0 md:ml-5 lg:ml-20">

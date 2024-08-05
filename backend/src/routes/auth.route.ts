@@ -4,6 +4,7 @@ import {
   login,
   logout,
   registerUser,
+  verifyEmail,
 } from "../controllers/auth.controller";
 import { check } from "express-validator";
 
@@ -36,5 +37,7 @@ router.post(
 router.post("/google", google);
 
 router.post("/logout", logout);
+
+router.get("/verify-email/:token", verifyEmail);
 
 export default router;

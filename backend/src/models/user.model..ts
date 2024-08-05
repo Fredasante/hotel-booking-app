@@ -5,6 +5,8 @@ import bcrypt from "bcryptjs";
 export interface UserType extends Document {
   email: string;
   password: string;
+  isVerified: boolean;
+  verificationToken: string | null;
   firstName: string;
   lastName: string;
   displayName?: string;
@@ -35,6 +37,7 @@ const userSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    verificationToken: { type: String, default: null },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     displayName: { type: String },

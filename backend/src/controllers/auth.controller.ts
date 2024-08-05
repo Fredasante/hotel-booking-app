@@ -3,6 +3,7 @@ import User from "../models/user.model.";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import sendVerificationEmail from "../utils/emailHelpers";
 
 export const registerUser = async (req: Request, res: Response) => {
   // Validate request
@@ -24,28 +25,46 @@ export const registerUser = async (req: Request, res: Response) => {
     const newUser = new User({ email, firstName, lastName, password });
     await newUser.save();
 
-    // Generate a JWT token
-    const token = jwt.sign(
+    // Generate a JWT token for authentication
+    const authToken = jwt.sign(
       { userId: newUser.id },
       process.env.JWT_SECRET_KEY as string,
-      {
-        expiresIn: "1d",
-      }
+      { expiresIn: "1d" }
     );
-    // Set the token as an HTTP-only cookie
-    res.cookie("auth_token", token, {
+
+    // Generate a JWT token for email verification
+    const verificationToken = jwt.sign(
+      { userId: newUser.id },
+      process.env.JWT_SECRET_KEY as string,
+      { expiresIn: "1h" }
+    );
+
+    // Save the verification token to the user's record
+    newUser.verificationToken = verificationToken;
+    await newUser.save();
+
+    // Send verification email
+    await sendVerificationEmail(email, verificationToken);
+
+    // Set the auth token as an HTTP-only cookie
+    res.cookie("auth_token", authToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 86400000,
     });
+
     // Send success response
-    return res.status(200).json({ message: "User registered successfully" });
+    return res.status(200).json({
+      message:
+        "User registered successfully. Please check your email to verify your account.",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
   }
 };
 
+// custom login
 export const login = async (req: Request, res: Response) => {
   // validate the request
   const errors = validationResult(req);
@@ -91,6 +110,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+// google login
 export const google = async (req: Request, res: Response) => {
   const { displayName, email, photoURL } = req.body;
 
@@ -137,8 +157,46 @@ export const google = async (req: Request, res: Response) => {
   }
 };
 
+// logout
 export const logout = async (req: Request, res: Response) => {
   res.clearCookie("auth_token");
 
   res.status(200).json({ message: "Logged out successfully" });
+};
+
+// verify email
+export const verifyEmail = async (req: Request, res: Response) => {
+  const { token } = req.params;
+
+  try {
+    // Verify the token
+    const decoded: any = jwt.verify(
+      token,
+      process.env.JWT_SECRET_KEY as string
+    );
+    const userId = decoded.userId;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Invalid token or user does not exist" });
+    }
+
+    // Check if the token matches the one saved on the user's record
+    if (user.verificationToken !== token) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    // Update user's email verification status
+    user.isVerified = true;
+    user.verificationToken = null; // Clear the verification token
+    await user.save();
+
+    return res.status(200).json({ message: "Email verified successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
 };
