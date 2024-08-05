@@ -1,12 +1,12 @@
 import express from "express";
-import verifyToken from "../middleware/auth";
+import verifyToken from "../auth";
 import multer from "multer";
 import {
   createMyHotel,
   getHotelById,
   getMyHotels,
   updateHotel,
-} from "../controllers/hotel.controller";
+} from "../../controllers/hotel.controller";
 import { body } from "express-validator";
 
 const router = express.Router();

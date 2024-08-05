@@ -3,13 +3,13 @@ import User from "../models/user.model.";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
-import sendVerificationEmail from "../utils/emailHelpers";
+import { sendVerificationEmail } from "../utils/emailHelpers";
 
 export const registerUser = async (req: Request, res: Response) => {
   // Validate request
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ message: errors.array() });
+    return res.status(400).json({ errors: errors.array() });
   }
 
   const { email, firstName, lastName, password } = req.body;
@@ -23,7 +23,6 @@ export const registerUser = async (req: Request, res: Response) => {
 
     // Create a new user
     const newUser = new User({ email, firstName, lastName, password });
-    await newUser.save();
 
     // Generate a JWT token for authentication
     const authToken = jwt.sign(
@@ -32,10 +31,10 @@ export const registerUser = async (req: Request, res: Response) => {
       { expiresIn: "1d" }
     );
 
-    // Generate a JWT token for email verification
+    // Generate a verification token
     const verificationToken = jwt.sign(
       { userId: newUser.id },
-      process.env.JWT_SECRET_KEY as string,
+      process.env.JWT_VERIFICATION_KEY as string,
       { expiresIn: "1h" }
     );
 
@@ -44,23 +43,27 @@ export const registerUser = async (req: Request, res: Response) => {
     await newUser.save();
 
     // Send verification email
-    await sendVerificationEmail(email, verificationToken);
+    const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+    await sendVerificationEmail(email, verificationLink);
 
     // Set the auth token as an HTTP-only cookie
     res.cookie("auth_token", authToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
       maxAge: 86400000,
     });
 
     // Send success response
-    return res.status(200).json({
+    return res.status(201).json({
       message:
         "User registered successfully. Please check your email to verify your account.",
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: "Something went wrong!" });
+    console.error("Error in user registration:", error);
+    res
+      .status(500)
+      .json({ message: "Something went wrong during registration" });
   }
 };
 

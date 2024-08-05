@@ -5,7 +5,7 @@ import {
   logout,
   registerUser,
   verifyEmail,
-} from "../controllers/auth.controller";
+} from "../../controllers/auth.controller";
 import { check } from "express-validator";
 
 const router = express.Router();
