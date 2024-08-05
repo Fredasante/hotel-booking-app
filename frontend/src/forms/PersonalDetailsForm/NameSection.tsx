@@ -17,15 +17,12 @@ const NameSection = ({ onSave }: NameSectionProps) => {
   const firstName = watch("firstName");
   const lastName = watch("lastName");
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
-  };
+  const handleCancelClick = () => setIsEditing(false);
 
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const isValid = await trigger(["firstName", "lastName"]);
     if (isValid) {
       onSave();
@@ -34,13 +31,13 @@ const NameSection = ({ onSave }: NameSectionProps) => {
   };
 
   return (
-    <div className="py-4 flex justify-between gap-2 md:gap-5 lg:gap-10 border-t border-b border-gray-200">
+    <div className="py-4 flex flex-wrap md:flex-nowrap justify-between gap-2 md:gap-5 lg:gap-10 border-t border-b border-gray-200">
       <span className="w-32 md:w-40">Name</span>
 
       {isEditing ? (
         <div className="space-y-2 w-full">
-          <div className="flex flex-wrap md:flex-nowrap justify-between">
-            <div className="flex flex-col w-full md:w-1/2 mr-2 mb-3">
+          <div className="flex flex-wrap md:flex-nowrap gap-2 justify-between">
+            <div className="flex flex-col w-full md:w-1/2 mb-3">
               <label className="font-semibold text-sm" htmlFor="firstName">
                 First name(s)
               </label>

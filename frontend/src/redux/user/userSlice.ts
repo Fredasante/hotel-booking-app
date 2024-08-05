@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../types";
+import { User } from "../../types/types";
 
 export type UserState = {
   currentUser: User | null;
@@ -35,10 +35,18 @@ export const userSlice = createSlice({
       state.error = null;
       state.loading = false;
     },
+    updateUserSuccess: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload;
+    },
   },
 });
 
-export const { signInStart, signInSuccess, signInFailure, signOut } =
-  userSlice.actions;
+export const {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+  signOut,
+  updateUserSuccess,
+} = userSlice.actions;
 
 export default userSlice.reducer;

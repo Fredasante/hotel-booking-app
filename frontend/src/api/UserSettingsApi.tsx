@@ -26,7 +26,7 @@ export const useGetUserDetails = () => {
   return { userDetails, isLoading, error };
 };
 
-export const useUpdateUserSettings = () => {
+export const useUpdateUserDetails = () => {
   const update = async (formData: UserFormType) => {
     const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
       method: "PUT",
@@ -43,14 +43,11 @@ export const useUpdateUserSettings = () => {
     return response.json();
   };
 
-  const { mutateAsync: updateUserSettings, isLoading } = useMutation(update, {
-    onSuccess: () => {
-      toast.success("Settings updated!");
-    },
+  const { mutateAsync: updateUserDetails, isLoading } = useMutation(update, {
     onError: (error: any) => {
       toast.error(error.message || "Failed to update user settings");
     },
   });
 
-  return { updateUserSettings, isLoading };
+  return { updateUserDetails, isLoading };
 };

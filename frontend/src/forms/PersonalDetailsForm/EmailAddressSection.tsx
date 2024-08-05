@@ -17,11 +17,10 @@ const EmailAddressSection = ({ onSave }: EmailProps) => {
 
   const email = watch("email");
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
     const isValid = await trigger("email");
 
     if (isValid) {
@@ -30,16 +29,14 @@ const EmailAddressSection = ({ onSave }: EmailProps) => {
     }
   };
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
-  };
+  const handleCancelClick = () => setIsEditing(false);
 
   return (
-    <div className="py-4 flex gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
+    <div className="py-4 flex flex-wrap md:flex-nowrap gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
       <span className="md:w-40 whitespace-nowrap">Email Address</span>
 
       {isEditing ? (
-        <div className="flex flex-col w-full space-y-2">
+        <div className="flex flex-col w-full">
           <div className="flex flex-wrap md:flex-nowrap justify-between">
             <div className="flex flex-col w-full md:w-1/2 mr-2 mb-3">
               <label className="font-semibold text-sm" htmlFor="email">

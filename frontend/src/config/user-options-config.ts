@@ -43,3 +43,10 @@ export const years = Array.from(
   { length: 21 },
   (_, i) => new Date().getFullYear() + i
 );
+
+export const GenderOptions = [
+  { value: "Male", label: "Male" },
+  { value: "Female", label: "Female" },
+  { value: "Other", label: "Other" },
+  { value: "Prefer not to say", label: "Prefer not to say" },
+];

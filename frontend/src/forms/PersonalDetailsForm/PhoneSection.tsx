@@ -35,7 +35,7 @@ const PhoneSection = ({ onSave }: PhoneSectionProps) => {
   };
 
   return (
-    <div className="py-4 flex gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
+    <div className="py-4 flex flex-wrap md:flex-nowrap gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
       <span className="md:w-40 whitespace-nowrap">Phone Number</span>
 
       {isEditing ? (

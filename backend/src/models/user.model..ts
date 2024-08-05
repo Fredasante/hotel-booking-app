@@ -26,6 +26,7 @@ export interface UserType extends Document {
     number?: string;
     expiryDate?: Date;
     issuingCountry?: string;
+    consent?: boolean;
   };
 }
 
@@ -62,6 +63,7 @@ const userSchema = new Schema(
       number: { type: String },
       expiryDate: { type: Date },
       issuingCountry: { type: String },
+      consent: { type: Boolean },
     },
   },
   { timestamps: true }

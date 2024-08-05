@@ -16,15 +16,12 @@ const DisplayNameSection: React.FC<DisplayNameSectionProps> = ({ onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const displayName = watch("displayName");
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
-  };
+  const handleCancelClick = () => setIsEditing(false);
 
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
     const isValid = await trigger("displayName");
     if (isValid) {
       onSave();
@@ -33,7 +30,7 @@ const DisplayNameSection: React.FC<DisplayNameSectionProps> = ({ onSave }) => {
   };
 
   return (
-    <div className="py-4 flex justify-between gap-2 md:gap-5 lg:gap-10 border-t border-b border-gray-200">
+    <div className="py-4 flex flex-wrap md:flex-nowrap justify-between gap-2 md:gap-5 lg:gap-10 border-b border-gray-200">
       <span className="w-32 md:w-40">Display Name</span>
 
       {isEditing ? (

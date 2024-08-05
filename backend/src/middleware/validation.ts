@@ -25,10 +25,16 @@ export const validateProfileUpdate = [
   body("address.postalCode").optional().isString(),
   body("address.country").optional().isString(),
   body("passportDetails.number").optional().isString(),
+  body("passportDetails.firstName").optional().isString(),
+  body("passportDetails.lastName").optional().isString(),
   body("passportDetails.expiryDate")
     .optional()
     .isISO8601()
     .toDate()
     .withMessage("Invalid passport expiry date"),
   body("passportDetails.issuingCountry").optional().isString(),
+  body("passportDetails.consent")
+    .optional()
+    .isBoolean()
+    .withMessage("Invalid consent value"),
 ];

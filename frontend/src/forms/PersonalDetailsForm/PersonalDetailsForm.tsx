@@ -2,7 +2,10 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { UserFormType } from "../../types/types";
 import NameSection from "./NameSection";
 import DisplayNameSection from "./DisplayNameSection";
-import { useGetUserDetails } from "../../api/UserSettingsApi";
+import {
+  useGetUserDetails,
+  useUpdateUserDetails,
+} from "../../api/UserSettingsApi";
 import { useEffect } from "react";
 import EmailAddressSection from "./EmailAddressSection";
 import PhoneSection from "./PhoneSection";
@@ -11,11 +14,15 @@ import NationalitySection from "./NationalitySection";
 import GenderSection from "./GenderSection";
 import AddressSection from "./AddressSection";
 import PassportSection from "./PassportSection";
+import { useDispatch } from "react-redux";
+import { updateUserSuccess } from "../../redux/user/userSlice";
 
 const PersonalDetailsForm = () => {
   const { userDetails } = useGetUserDetails();
+  const { updateUserDetails } = useUpdateUserDetails();
   const formMethods = useForm<UserFormType>();
   const { reset, handleSubmit } = formMethods;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userDetails) {
@@ -23,9 +30,13 @@ const PersonalDetailsForm = () => {
     }
   }, [userDetails, reset]);
 
-  const onSave: SubmitHandler<UserFormType> = (data) => {
-    console.log("Form data:", data);
-    // Perform save logic here
+  const onSave: SubmitHandler<UserFormType> = async (formData) => {
+    try {
+      await updateUserDetails(formData);
+      dispatch(updateUserSuccess(formData));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -39,11 +50,11 @@ const PersonalDetailsForm = () => {
         <DisplayNameSection onSave={handleSubmit(onSave)} />
         <EmailAddressSection onSave={handleSubmit(onSave)} />
         <PhoneSection onSave={handleSubmit(onSave)} />
-        <DateOfBirthSection />
-        <NationalitySection />
-        <GenderSection />
-        <AddressSection />
-        <PassportSection />
+        <DateOfBirthSection onSave={handleSubmit(onSave)} />
+        <NationalitySection onSave={handleSubmit(onSave)} />
+        <GenderSection onSave={handleSubmit(onSave)} />
+        <AddressSection onSave={handleSubmit(onSave)} />
+        <PassportSection onSave={handleSubmit(onSave)} />
       </form>
     </FormProvider>
   );

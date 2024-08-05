@@ -1,26 +1,31 @@
-// components/NationalitySection.tsx
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { UserFormType } from "../../types/types";
 import { countries } from "countries-list";
 
-const NationalitySection = () => {
-  const { register, watch } = useFormContext<UserFormType>();
+interface NationalityProps {
+  onSave: () => void;
+}
+
+const NationalitySection = ({ onSave }: NationalityProps) => {
+  const { register, watch, trigger } = useFormContext<UserFormType>();
   const [isEditing, setIsEditing] = useState(false);
 
   const nationality = watch("nationality");
 
-  const handleEditClick = () => {
-    setIsEditing(true);
+  const handleEditClick = () => setIsEditing(true);
+
+  const handleSaveClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const isValid = await trigger("nationality");
+
+    if (isValid) {
+      onSave();
+      setIsEditing(false);
+    }
   };
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
-  };
-
-  const handleCancelClick = () => {
-    setIsEditing(false);
-  };
+  const handleCancelClick = () => setIsEditing(false);
 
   // Get the country list from the package
   const countryList = Object.entries(countries).map(([code, country]) => ({
@@ -29,7 +34,7 @@ const NationalitySection = () => {
   }));
 
   return (
-    <div className="py-4 flex gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
+    <div className="py-4 flex flex-wrap md:flex-nowrap gap-2 md:gap-7 lg:gap-10 border-b border-gray-200">
       <span className="w-32 md:w-40 whitespace-nowrap">Nationality</span>
 
       {isEditing ? (
