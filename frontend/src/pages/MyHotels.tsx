@@ -5,11 +5,14 @@ import { BiTerminal } from "react-icons/bi";
 import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert";
 import { Link } from "react-router-dom";
 import { FaMapMarkerAlt, FaStar, FaRegCalendarAlt } from "react-icons/fa";
-import { FaCediSign } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const MyHotels = () => {
   const { hotels, isLoading } = useGetHotels();
-
+  const { selectedCurrency, exchangeRates } = useSelector(
+    (state: RootState) => state.currency
+  );
   if (isLoading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center mx-auto">
@@ -41,6 +44,21 @@ const MyHotels = () => {
       </div>
     );
   }
+
+  const convertPrice = (price: number) => {
+    if (exchangeRates && selectedCurrency !== "USD") {
+      const rate = exchangeRates[selectedCurrency];
+      const convertedPrice = price * rate;
+      return convertedPrice.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+    return price.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
 
   return (
     <>
@@ -86,7 +104,7 @@ const MyHotels = () => {
                   {hotel.city}, {hotel.country}
                 </div>
                 <div className=" text-gray-800 text-sm font-semibold flex items-center">
-                  <FaCediSign /> {hotel.pricePerNight.toLocaleString()} per
+                  {selectedCurrency} {convertPrice(hotel.pricePerNight)} per
                   night
                 </div>
               </div>

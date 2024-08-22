@@ -3,9 +3,11 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import userReducer from "./user/userSlice";
+import currencyReducer from "./currency/currencySlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  currency: currencyReducer,
 });
 
 const persistConfig = {

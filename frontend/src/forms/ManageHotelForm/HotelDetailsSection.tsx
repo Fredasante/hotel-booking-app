@@ -1,11 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { HotelFormData } from "./ManageHotelForm";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const HotelDetailsSection = () => {
   const {
     register,
     formState: { errors },
   } = useFormContext<HotelFormData>();
+
+  const { selectedCurrency } = useSelector(
+    (state: RootState) => state.currency
+  );
+
   return (
     <div>
       <div>
@@ -75,7 +82,8 @@ const HotelDetailsSection = () => {
         <div className="grid md:grid-cols-2 md:gap-8 gap-4 mt-3">
           <div>
             <label className="text-gray-800 text-sm mb-2 block">
-              Price Per Night
+              Price Per Night{" "}
+              <span className="font-semibold">({selectedCurrency})</span>
             </label>
             <input
               {...register("pricePerNight", {

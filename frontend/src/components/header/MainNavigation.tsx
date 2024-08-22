@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UsernameMenu from "./UsernameMenu";
 import { RootState } from "../../redux/store";
+import CurrencySelector from "../CurrencySelector";
+import ExchangeRateFetcher from "../ExchangeRateFetcher";
 
 const MainNav = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -14,6 +16,8 @@ const MainNav = () => {
               Manage Hotels
             </span>
           </Link>
+          <CurrencySelector />
+          <ExchangeRateFetcher />
           <UsernameMenu />
         </div>
       ) : (
